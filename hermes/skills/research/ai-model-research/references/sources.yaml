@@ -1,0 +1,159 @@
+# Curated source list for ai-model-research.
+# Entries marked "# verify" should be checked before relying on them.
+
+official_blogs:
+  - name: OpenAI Blog
+    url: https://openai.com/blog/rss.xml
+    tags: [frontier_lab, models, products]
+  - name: Google DeepMind Blog
+    url: https://deepmind.google/blog/rss.xml
+    tags: [frontier_lab, research, gemini]
+  - name: Qwen Blog
+    url: https://qwenlm.github.io/blog/index.xml
+    tags: [frontier_lab, open_models, alibaba]
+  - name: Hugging Face Blog
+    url: https://huggingface.co/blog/feed.xml
+    tags: [open_models, community, tooling]
+
+# Labs without official RSS — pulled via HN Algolia search instead.
+# These cover Anthropic, Meta AI, Mistral, xAI, DeepSeek announcements
+# whenever the community surfaces them on Hacker News.
+hn_searches:
+  - name: HN Anthropic
+    url: https://hn.algolia.com/api/v1/search_by_date?query=anthropic+claude&tags=story&numericFilters=points%3E15
+    tags: [frontier_lab, claude]
+  - name: HN Meta Llama
+    url: https://hn.algolia.com/api/v1/search_by_date?query=llama+meta&tags=story&numericFilters=points%3E15
+    tags: [frontier_lab, llama, open_models]
+  - name: HN Mistral
+    url: https://hn.algolia.com/api/v1/search_by_date?query=mistral&tags=story&numericFilters=points%3E15
+    tags: [frontier_lab, open_models]
+  - name: HN xAI Grok
+    url: https://hn.algolia.com/api/v1/search_by_date?query=grok+xai&tags=story&numericFilters=points%3E15
+    tags: [frontier_lab, grok]
+  - name: HN DeepSeek
+    url: https://hn.algolia.com/api/v1/search_by_date?query=deepseek&tags=story&numericFilters=points%3E15
+    tags: [frontier_lab, open_models, reasoning]
+  - name: HN Gemini
+    url: https://hn.algolia.com/api/v1/search_by_date?query=gemini+google&tags=story&numericFilters=points%3E20
+    tags: [frontier_lab, gemini]
+  - name: HN GPT
+    url: https://hn.algolia.com/api/v1/search_by_date?query=gpt+openai&tags=story&numericFilters=points%3E20
+    tags: [frontier_lab, openai]
+
+community_blogs:
+  - name: Simon Willison
+    url: https://simonwillison.net/atom/everything/
+    tags: [commentary, tools, llms]
+  - name: Latent Space
+    url: https://www.latent.space/feed
+    tags: [commentary, industry, models]
+  - name: Smol AI / AI News
+    url: https://buttondown.com/ainews/rss
+    tags: [daily_news, community, tools]
+  - name: Sebastian Raschka
+    url: https://magazine.sebastianraschka.com/feed
+    tags: [research, education, llms]
+  - name: Lilian Weng
+    url: https://lilianweng.github.io/index.xml
+    tags: [research, agents, llms]
+
+reddit_subs:
+  - name: r/LocalLLaMA
+    url: https://www.reddit.com/r/LocalLLaMA/top.json?t=week&limit=50
+    tags: [open_models, local_inference, community]
+  - name: r/MachineLearning
+    url: https://www.reddit.com/r/MachineLearning/top.json?t=week&limit=50
+    tags: [research, papers, community]
+  - name: r/singularity
+    url: https://www.reddit.com/r/singularity/top.json?t=week&limit=50
+    tags: [news, commentary, agi]
+  - name: r/OpenAI
+    url: https://www.reddit.com/r/OpenAI/top.json?t=week&limit=50
+    tags: [openai, gpt, products]
+  - name: r/ClaudeAI
+    url: https://www.reddit.com/r/ClaudeAI/top.json?t=week&limit=50
+    tags: [anthropic, claude]
+  - name: r/StableDiffusion
+    url: https://www.reddit.com/r/StableDiffusion/top.json?t=week&limit=50
+    tags: [image_models, open_models]
+
+bluesky_searches:
+  # Bluesky's public app.bsky.feed.searchPosts endpoint, no auth required.
+  - name: Bluesky "new model"
+    url: https://public.api.bsky.app/xrpc/app.bsky.feed.searchPosts?q=%22new+model%22+AI&sort=top&limit=50
+    tags: [models, social]
+  - name: Bluesky LLM benchmark
+    url: https://public.api.bsky.app/xrpc/app.bsky.feed.searchPosts?q=LLM+benchmark&sort=top&limit=50
+    tags: [benchmarks, social]
+  - name: Bluesky frontier AI
+    url: https://public.api.bsky.app/xrpc/app.bsky.feed.searchPosts?q=frontier+AI+model&sort=top&limit=50
+    tags: [frontier_lab, social]
+
+arxiv_categories:
+  - name: cs.CL
+    url: http://export.arxiv.org/api/query?search_query=cat:cs.CL&sortBy=submittedDate&sortOrder=descending&max_results=50
+    tags: [nlp, language_models]
+  - name: cs.LG
+    url: http://export.arxiv.org/api/query?search_query=cat:cs.LG&sortBy=submittedDate&sortOrder=descending&max_results=50
+    tags: [machine_learning, training]
+  - name: cs.AI
+    url: http://export.arxiv.org/api/query?search_query=cat:cs.AI&sortBy=submittedDate&sortOrder=descending&max_results=50
+    tags: [artificial_intelligence, agents]
+
+youtube_channels:
+  - name: AI Explained
+    channel_id: UCNJ1Ymd5yFuUPtn21xtRbbw
+    url: https://www.youtube.com/feeds/videos.xml?channel_id=UCNJ1Ymd5yFuUPtn21xtRbbw
+    tags: [analysis, frontier_models]
+  - name: Matthew Berman
+    channel_id: UCawZsQWqfGSbCI5yjkdVkTA
+    url: https://www.youtube.com/feeds/videos.xml?channel_id=UCawZsQWqfGSbCI5yjkdVkTA
+    tags: [news, tools, models]
+  - name: Wes Roth
+    channel_id: UCqcbQf6yw5KzRoDDcZ_wBSw
+    url: https://www.youtube.com/feeds/videos.xml?channel_id=UCqcbQf6yw5KzRoDDcZ_wBSw
+    tags: [news, commentary]
+  - name: bycloud
+    channel_id: UC29ju8bIPH5as8OGnQzwJyA
+    url: https://www.youtube.com/feeds/videos.xml?channel_id=UC29ju8bIPH5as8OGnQzwJyA
+    tags: [engineering, ai_tools]
+  - name: Yannic Kilcher
+    channel_id: UCZHmQk67mSJgfCCTn7xBfew
+    url: https://www.youtube.com/feeds/videos.xml?channel_id=UCZHmQk67mSJgfCCTn7xBfew
+    tags: [papers, research]
+  - name: Sam Witteveen
+    channel_id: UC55ODQSvARtgSyc8ThfiepQ
+    url: https://www.youtube.com/feeds/videos.xml?channel_id=UC55ODQSvARtgSyc8ThfiepQ
+    tags: [agents, tooling, models]
+  - name: 1littlecoder
+    channel_id: UCpV_X0VrL8-jg3t6wYGS-1g
+    url: https://www.youtube.com/feeds/videos.xml?channel_id=UCpV_X0VrL8-jg3t6wYGS-1g
+    tags: [tutorials, open_models]
+  - name: Two Minute Papers
+    channel_id: UCbfYPyITQ-7l4upoX8nvctg
+    url: https://www.youtube.com/feeds/videos.xml?channel_id=UCbfYPyITQ-7l4upoX8nvctg
+    tags: [papers, research]
+  - name: Dwarkesh Patel
+    channel_id: UCXl4i9dYBrFOabk0xGmbkRA
+    url: https://www.youtube.com/feeds/videos.xml?channel_id=UCXl4i9dYBrFOabk0xGmbkRA
+    tags: [interviews, labs, strategy]
+  - name: AI Jason
+    channel_id: UCrXSVX9a1mj8l0CMLwKgMVw
+    url: https://www.youtube.com/feeds/videos.xml?channel_id=UCrXSVX9a1mj8l0CMLwKgMVw
+    tags: [agents, automation]
+  - name: David Shapiro
+    channel_id: UCvKRFNawVcuz4b9ihUTApCg
+    url: https://www.youtube.com/feeds/videos.xml?channel_id=UCvKRFNawVcuz4b9ihUTApCg
+    tags: [commentary, agents]
+
+leaderboards:
+  - name: LMSYS Chatbot Arena
+    url: https://lmarena.ai/leaderboard
+    tags: [leaderboard, chat, preference_eval]
+  - name: LiveBench
+    url: https://livebench.ai/
+    tags: [leaderboard, reasoning, coding, math]
+  - name: SWE-bench
+    url: https://www.swebench.com/
+    tags: [leaderboard, coding, agents]

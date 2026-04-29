@@ -1,0 +1,10 @@
+/home/zeke/.hermes/hermes-agent
+/home/zeke/.hermes/skills/note-taking/obsidian-hermes-memory
+/home/zeke/.hermes/skills/security/daily-security-report
+/home/zeke/.hermes/skills
+/home/zeke/hermes-mission-control/.next/standalone
+/home/zeke/hermes-mission-control
+/home/zeke/.codex/.tmp/plugins
+/home/zeke/.openclaw/workspace/skills/openclaw-image-skill
+/home/zeke/.openclaw/workspace/projects/mission-control
+/home/zeke/.openclaw/workspace
