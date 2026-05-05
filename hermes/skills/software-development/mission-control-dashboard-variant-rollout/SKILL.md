@@ -64,3 +64,7 @@ Run in repo root:
 - Classic dashboard renders with live Mission Control data.
 - Command console buttons route to existing panels/actions.
 - Typecheck passes; lint has no new errors.
+
+## Deployment Reference
+
+See `references/deployment-pitfalls.md` for the full deployment and systemd guide, including Node version gotchas and the better-sqlite3 native addon rebuild procedure.

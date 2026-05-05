@@ -1,6 +1,6 @@
 ---
 name: codex
-description: Delegate coding tasks to OpenAI Codex CLI agent. Use for building features, refactoring, PR reviews, and batch issue fixing. Requires the codex CLI and a git repository.
+description: "Delegate coding to OpenAI Codex CLI (features, PRs)."
 version: 1.0.0
 author: Hermes Agent
 license: MIT
@@ -13,6 +13,15 @@ metadata:
 # Codex CLI
 
 Delegate coding tasks to [Codex](https://github.com/openai/codex) via the Hermes terminal. Codex is OpenAI's autonomous coding agent CLI.
+
+## When to use
+
+- Building features
+- Refactoring
+- PR reviews
+- Batch issue fixing
+
+Requires the codex CLI and a git repository.
 
 ## Prerequisites
 
@@ -32,26 +41,6 @@ For scratch work (Codex needs a git repo):
 terminal(command="cd $(mktemp -d) && git init && codex exec 'Build a snake game in Python'", pty=true)
 ```
 
-**Or use `--skip-git-repo-check` to bypass the requirement entirely** (useful when building a skill in a non-git directory like `~/.hermes/skills/...`):
-```
-codex exec --yolo --skip-git-repo-check "your prompt"
-```
-
-## Long Specs via File (recommended for multi-step builds)
-
-For complex builds (multi-file skills, refactors with detailed requirements), write the spec to a file and pass via command substitution. Avoids shell-escape hell:
-
-```
-write_file("/tmp/spec.md", "# Detailed spec...\n...")
-terminal(command='codex exec --yolo --skip-git-repo-check "$(cat /tmp/spec.md)"',
-         workdir="~/path/to/project", background=true, pty=true, notify_on_complete=true)
-```
-
-**Or skip the git check entirely** with `--skip-git-repo-check` — useful when you've created a fresh target dir (e.g. a new skill directory) and don't need version control:
-```
-terminal(command="codex exec --yolo --skip-git-repo-check 'your prompt'", workdir="~/path/to/dir", pty=true)
-```
-
 ## Background Mode (Long Tasks)
 
 ```
@@ -62,12 +51,6 @@ terminal(command="codex exec --full-auto 'Refactor the auth module'", workdir="~
 # Monitor progress
 process(action="poll", session_id="<id>")
 process(action="log", session_id="<id>")
-```
-
-**⚠️ Output buffering caveat:** If you wrap the codex command with shell pipes like `| tail -200` or `| head`, the entire stdout buffers until codex exits — `process(action='log')` will show empty output mid-run even though codex is working. **Workarounds:**
-1. Don't pipe — run codex directly so PTY output streams to the process buffer
-2. Check the workdir directly (`ls`, `search_files`) to see files being created in real time
-3. Use `notify_on_complete=true` and just wait for the completion notification
 
 # Send input if Codex asks a question
 process(action="submit", session_id="<id>", data="yes")
@@ -128,32 +111,44 @@ terminal(command="codex exec 'Review PR #87. git diff origin/main...origin/pr/87
 terminal(command="gh pr comment 86 --body '<review>'", workdir="~/project")
 ```
 
-## Sandbox Failures → Use `--yolo`
+## Hermes MCP Integration
 
-`--full-auto` uses bubblewrap (`bwrap`) for sandboxing. On some hosts (containers, restricted Linux environments) bwrap fails with errors like:
+Codex can run as an MCP server, giving Hermes native access to Codex tools (codex, codex-reply) without terminal orchestration.
 
+### Setup (one-time)
+Add to `~/.hermes/config.yaml`:
+```yaml
+mcp_servers:
+  codex:
+    command: "codex"
+    args: ["mcp-server"]
+    env:
+      OPENAI_API_KEY: "sk-proj-..."
+    timeout: 120
+    connect_timeout: 60
 ```
-bwrap: loopback: Failed RTM_NEWADDR: Operation not permitted
+
+### Verify
+```bash
+hermes mcp list        # should show codex as enabled
+hermes mcp test codex  # should discover 2 tools: codex, codex-reply
 ```
 
-When this happens Codex cannot write any files — even `apply_patch` to `/tmp` fails — and the run exits "successfully" having done nothing. **Symptom:** the Codex output ends with messages about being "blocked by the execution environment" and probe writes failing.
+### Tools provided
+- `mcp_codex_codex` — run a full Codex coding session
+- `mcp_codex_codex_reply` — continue a Codex conversation by thread ID
 
-**Fix:** retry the same command with `--yolo` instead of `--full-auto`. `--yolo` skips the sandbox entirely.
-
-```
-# If --full-auto fails with bwrap errors:
-codex exec --yolo "your prompt"
-```
-
-Trade-off: `--yolo` has no sandbox, so only use it on hosts you trust and on tasks scoped to a known directory.
+### Also required
+- `OPENAI_API_KEY` must be in `~/.hermes/.env` AND exported in `~/.bashrc` (for terminal-based calls)
+- Codex v0.128.0+ supports `mcp-server` subcommand (stdio transport)
+- `--full-auto` is deprecated in v0.128.0+; use `--sandbox workspace-write` instead
 
 ## Rules
 
 1. **Always use `pty=true`** — Codex is an interactive terminal app and hangs without a PTY
 2. **Git repo required** — Codex won't run outside a git directory. Use `mktemp -d && git init` for scratch
 3. **Use `exec` for one-shots** — `codex exec "prompt"` runs and exits cleanly
-4. **`--full-auto` for building** — auto-approves changes within the sandbox; fall back to `--yolo` if sandbox is unavailable (see above)
+4. **`--full-auto` for building** — auto-approves changes within the sandbox
 5. **Background for long tasks** — use `background=true` and monitor with `process` tool
 6. **Don't interfere** — monitor with `poll`/`log`, be patient with long-running tasks
 7. **Parallel is fine** — run multiple Codex processes at once for batch work
-8. **Pass long specs via file** — for complex prompts, write the spec to `/tmp/spec.md` and invoke as `codex exec --yolo "$(cat /tmp/spec.md)"` to avoid shell-escaping issues
