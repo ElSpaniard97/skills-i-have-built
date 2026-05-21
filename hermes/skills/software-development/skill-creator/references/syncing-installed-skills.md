@@ -13,8 +13,8 @@ Use this when asked to update a repo that backs up the current installed skills 
    - `.git`, `.hg`, `.svn`
    - `__pycache__`, `*.pyc`, `.pytest_cache`, `.mypy_cache`, `.ruff_cache`
    - `.venv`, `venv`, `node_modules`
-   - `.last_message_id`, `.usage.json`, `.curator_state`
-   - local hidden runtime directories such as `.hub`
+   - `.last_message_id`, `.usage.json`, `.usage.json.lock`, `.curator_state`
+   - local hidden runtime directories such as `.hub` and `.curator_backups`
 5. Regenerate README/index counts from discovered `SKILL.md` files rather than hard-coding counts.
 6. Scan the copied tree before commit for obvious secrets/token examples.
    - Discord bot token shape: `part1.part2.part3`
