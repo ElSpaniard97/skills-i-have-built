@@ -252,6 +252,33 @@ gh repo edit --add-topic "machine-learning,python"
 gh repo edit --enable-auto-merge
 ```
 
+### Static-site content and brand asset changes
+
+For small copy/pricing/content edits or logo/brand asset refreshes in GitHub Pages/static sites, also read `references/static-site-content-edits.md`. It includes the repo identity guardrail, consistency search, logo asset refresh workflow, local rendered/visual verification, Pages deployment checks, and custom-domain DNS caveat.
+
+### Renaming repositories
+
+For repo rename + static-site rebrand tasks, also read `references/repo-rename-static-site.md` for the safe sequence and GitHub Pages verification checklist.
+
+```bash
+# Prefer a fresh clone directory over deleting an existing worktree.
+workdir="/tmp/${OLD_REPO}-rename-$(date +%Y%m%d%H%M%S)"
+git clone "https://github.com/${OWNER}/${OLD_REPO}.git" "$workdir"
+cd "$workdir"
+
+# Confirm target is available, then rename.
+gh repo view "$OWNER/$NEW_REPO" >/dev/null 2>&1 && echo "target exists" && exit 1
+gh repo rename "$NEW_REPO" -R "$OWNER/$OLD_REPO" --yes
+git remote set-url origin "https://github.com/${OWNER}/${NEW_REPO}.git"
+
+# Push any local content changes after updating remotes.
+git push origin main
+
+# Verify metadata, Pages deployment, and live URL.
+gh repo view "$OWNER/$NEW_REPO" --json nameWithOwner,url,homepageUrl,defaultBranchRef
+for i in 1 2 3 4 5 6; do gh run list -R "$OWNER/$NEW_REPO" --limit 1; sleep 10; done
+```
+
 **With curl:**
 
 ```bash

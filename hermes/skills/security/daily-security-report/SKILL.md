@@ -31,6 +31,12 @@ bash ~/.hermes/skills/security/daily-security-report/scripts/run_all.sh
 cat ~/.hermes/security-reports/latest.md
 ```
 
+Before enabling or changing delivery, inspect the generated report for secrets. GitHub/auth tooling can emit token status lines; `scan_infra.sh` should redact token-like evidence before findings are added, but a fresh manual run plus a token-pattern scan is still required before posting reports to chat.
+
+## Delivery Wrappers
+
+For scheduled Discord delivery with attachments, prefer a small wrapper under `~/.hermes/scripts/` that runs `run_all.sh`, checks `latest.md` freshness, archives a dated copy, scans/redacts defensively, tracks consecutive failures, and uploads the Markdown as a Discord attachment. Do not call `apply_fix.py` from report-only cron jobs.
+
 ## Applying Fixes
 
 Fix application is approval-gated:

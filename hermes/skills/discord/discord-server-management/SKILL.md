@@ -28,7 +28,7 @@ Authorization: Bot $DISCORD_BOT_TOKEN
 Content-Type: application/json
 ```
 
-The guild ID will always resolve to `1497587108850958387`. Never ask the user for a server ID.
+The active Hermes Discord server observed in this environment is `1499784767137251490` (`Hermes server`). If a stored `DISCORD_GUILD_ID` is missing or stale, verify the current guild with a known-good bot token via `GET /users/@me/guilds` before managing channels. Do not assume old guild ID `1497587108850958387`.
 
 ---
 

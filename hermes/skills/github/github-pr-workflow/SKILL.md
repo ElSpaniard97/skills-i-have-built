@@ -150,6 +150,8 @@ To create as a draft, add `"draft": true` to the JSON body.
 
 ## 4. Monitoring CI Status
 
+For static GitHub Pages repositories, also see `references/static-github-pages.md` for the push-and-verify pattern: local browser smoke test, lightweight static CI, Pages deployment watch, and live URL grep verification.
+
 ### Check CI Status
 
 **With gh:**

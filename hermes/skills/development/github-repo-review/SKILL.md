@@ -22,6 +22,8 @@ Use this skill when the user asks to review a GitHub repository, audit repo qual
 ## Procedure
 1. **Baseline repo metadata**
    - Default branch, last commit activity, open issues/PR counts (if available).
+   - If the repo is a static browser app and the user asks for UI suggestions or localStorage/page persistence, also read `references/static-react-localstorage-review.md` and follow its browser-verification pattern.
+   - If the user asks to rename/rebrand a static GitHub Pages site from a supplied logo/reference image, also read `references/static-site-rebrand-rename.md` for the review-to-implementation workflow and verification checklist.
 2. **Documentation quality**
    - Check README completeness (purpose, setup, usage, architecture, troubleshooting).
    - Verify LICENSE presence and contribution guidance.
@@ -36,16 +38,26 @@ Use this skill when the user asks to review a GitHub repository, audit repo qual
 6. **Links and portfolio readiness**
    - Validate critical links in README/docs when possible.
    - Evaluate public-facing clarity for recruiter/stakeholder consumption.
-7. **Recommendations**
+7. **Static UI/app review when applicable**
+   - For single-page/static apps, run locally with a simple server and inspect the UI in a browser instead of relying only on source review.
+   - If the static site has a Cloudflare Worker/API-backed chat widget, also read `references/static-site-cloudflare-worker-chat-review.md` and verify endpoint/CSP/CORS/docs consistency plus the exact visible quick-reply labels.
+   - If the user supplies a brand image or reference design, analyze it with vision first, then verify the implemented/static page visually in the browser against that palette, logo treatment, typography feel, spacing, and obvious layout issues.
+   - Check persistence behavior explicitly: click a tab/control, reload, and inspect `localStorage`/state restoration if the app claims to remember progress or pages.
+   - When running local internal link checks, strip query strings and fragments before filesystem checks so valid links like `pricing.html#section` and `contact.html?plan=...` are not false positives.
+   - Recommend practical UX hardening for local-only apps: visible backup warning, export/import validation, stronger reset confirmation, mobile tab/table behavior, and action-oriented dashboard cards.
+8. **Recommendations**
    - Provide prioritized findings: Critical, High, Medium, Low.
-   - Propose patches/PRs/issues instead of silent rewrites.
+   - Propose patches/PRs/issues instead of silent rewrites unless the user explicitly asked for implementation.
+   - When making local changes, do not push automatically unless the user explicitly asked for the repository to be changed/deployed; provide changed paths and verification either way.
 
 ## Guardrails
-- Do **not** push commits automatically.
-- Do **not** force-edit default branches.
+- Do **not** push commits automatically for review-only requests.
+- If the user explicitly asks to change, rename, deploy, or update a repo, implementation and push are allowed after verifying authentication, target repo, and working tree state.
+- Do **not** force-edit default branches unless the user clearly requested direct changes and you have verified the scope.
 - Do **not** expose secrets found in scans; redact evidence.
 - Do **not** claim CI/test status unless command/API evidence was collected.
-- For changes, provide explicit proposed patch/PR plan and wait for approval.
+- When replacing emoji/icon-only UI controls with text labels, also check CSS sizing; circular fixed-width buttons often need pill/min-width styles.
+- For review-only changes, provide explicit proposed patch/PR plan and wait for approval.
 
 ## Output Format
 Return markdown with this exact structure:

@@ -58,8 +58,13 @@ Post the script's stdout (the markdown report) verbatim as your final response �
 
 ## Critical Patterns
 
+### 0. Respect approval gates
+If the user asks for a plan only, or says not to implement until approval, stop after producing the plan. Do not create scripts, patch skills, create cron jobs, or send test messages until the user explicitly approves implementation.
+
 ### 1. `deliver="origin"` (or just omit `deliver`)
 This makes the cron job's final response go back to the channel/thread the user requested it from — preserving topic context on Telegram, thread context on Discord. Don't hardcode `discord:#channel` unless the user explicitly asks for a different destination.
+
+Exception: if a wrapper posts directly to the final destination itself (for example, to upload a Discord attachment reliably), set the cron job's `deliver="local"` to avoid duplicate cron response messages.
 
 ### 2. Verbatim-stdout prompt
 Cron agents have a strong instinct to summarize/paraphrase. The phrase **"Post the script's stdout (the markdown report) verbatim as your final response — do not paraphrase, summarize, or add commentary"** prevents this. Without it the agent will compress your carefully-formatted tables into prose.
@@ -92,6 +97,9 @@ Passing `skills=["<name>"]` makes the cron agent load `SKILL.md` before executin
 - **Cron prompts run in a fresh session** with no chat memory. Everything the agent needs must be in the prompt or the loaded skill.
 - **`started_at` in `state.db` is a Unix epoch float**, not ISO. Use `datetime.fromtimestamp(ts)` not `fromisoformat`.
 - **Persona prompts can override `deliver=origin`** — if your top-level CLAUDE.md says "always post to channel X", the cron agent may ignore the thread. Check persona before scheduling cross-channel jobs.
+- **`script=` paths are relative to `~/.hermes/scripts/`** — pass `"name.py"`, not an absolute path or `~/...`.
+- **Slow reports may outgrow script-only cron timeouts** — if `no_agent=True` times out before the report's own safe timeout, switch to agent-mode cron with a terminal timeout longer than the wrapper timeout.
+- **Attachments require end-to-end verification** — if delivering to Discord with a Markdown attachment, manually trigger the cron and inspect the destination message. If the normal cron final response does not attach the file, use a wrapper that posts a multipart Discord message directly and set `deliver="local"`. See `references/discord-attachment-cron-delivery.md`.
 
 ## Update / Manage
 

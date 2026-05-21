@@ -13,10 +13,20 @@ def run(cmd, timeout=30):
     except Exception as exc:
         return subprocess.CompletedProcess(cmd, 124, "", str(exc))
 
+def redact_evidence(value):
+    text = str(value)
+    # gh auth status may print an OAuth token line; reports must never persist or post it.
+    text = re.sub(r"(?im)^(\s*-\s*Token\s*:\s*)\S+", r"\1<REDACTED>", text)
+    text = re.sub(r"(?im)^(\s*-\s*Token\s*=\s*)\S+", r"\1<REDACTED>", text)
+    text = re.sub(r"(?i)(api[_-]?key|token|secret|password)(\s*[:=]\s*)[^\s`]{12,}", r"\1\2<REDACTED>", text)
+    text = re.sub(r"gh[pousr]_[A-Za-z0-9_]{20,}", "gh_token_<REDACTED>", text)
+    text = re.sub(r"sk-[A-Za-z0-9_-]{20,}", "sk-<REDACTED>", text)
+    return text
+
 def add(sev, title, evidence, fix, cmd="", sudo=False, auto=False):
     findings.append({
         "id": None, "scope": "infra", "severity": sev, "title": title,
-        "evidence": str(evidence).strip()[:2000], "fix_description": fix,
+        "evidence": redact_evidence(evidence).strip()[:2000], "fix_description": fix,
         "fix_command": cmd, "requires_sudo": bool(sudo), "auto_applicable": bool(auto),
     })
 

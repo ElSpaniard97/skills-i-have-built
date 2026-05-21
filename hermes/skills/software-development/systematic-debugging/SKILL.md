@@ -121,6 +121,8 @@ Run once to gather evidence showing WHERE it breaks.
 THEN analyze evidence to identify the failing component.
 THEN investigate that specific component.
 
+For static-site chat widgets backed by Cloudflare Workers, see `references/cloudflare-worker-chat-debugging.md` for a proven root-cause workflow covering `Failed to fetch`, CORS preflights, asset-only Worker deployments, `/api/chat` routing, Cloudflare secret pitfalls, and live browser verification.
+
 ### 5. Trace Data Flow
 
 **WHEN error is deep in the call stack:**

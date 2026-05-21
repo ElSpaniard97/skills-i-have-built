@@ -360,6 +360,10 @@ The packaging script will:
 
 If validation fails, the script will report the errors and exit without creating a package. Fix any validation errors and run the packaging command again.
 
+### Backing up installed skills
+
+When asked to update a GitHub repository with the currently installed skill library, use `references/syncing-installed-skills.md` for the safe sync workflow: filtered copy, generated README counts, token-shape scans, redaction, commit/push verification.
+
 ### Step 6: Iterate
 
 After testing the skill, users may request improvements. Often this happens right after using the skill, with fresh context of how the skill performed.

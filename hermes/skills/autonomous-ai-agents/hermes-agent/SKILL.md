@@ -599,6 +599,23 @@ terminal(command="tmux new-session -d -s resumed 'hermes --resume 20260225_14305
 - **Config changes:** In gateway: `/restart`. In CLI: exit and relaunch.
 - **Code changes:** Restart the CLI or gateway process
 
+### Update verification / local-change conflicts
+After `hermes update`, verify the live install and service instead of trusting the updater banner alone:
+```bash
+hermes --version
+hermes status --all
+hermes doctor --fix
+systemctl --user is-active hermes-gateway || true
+journalctl --user -u hermes-gateway --since '2 minutes ago' --no-pager | tail -80
+```
+If the updater reports local-change conflicts, it may still complete by resetting the worktree and preserving local changes in a stash. Check:
+```bash
+cd ~/.hermes/hermes-agent
+git status --short
+git stash list | head
+```
+Do not blindly apply the stash unless the user explicitly wants their local source edits restored; applying it can reintroduce conflicts or overwrite updated code. Report the stash ref so it can be recovered later.
+
 ### Skills not showing
 1. `hermes skills list` — verify installed
 2. `hermes skills config` — check platform enablement

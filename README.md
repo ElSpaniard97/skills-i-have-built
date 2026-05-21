@@ -1,20 +1,26 @@
 # skills-i-have-built
 
-Backup of all skills built and installed across ClaudeClaw, Hermes, and OpenClaw. Purpose: if any system needs to be rebuilt from scratch, all skills are documented and restorable from this repo.
+Backup of all skills built and installed across ClaudeClaw, Hermes, MyClaw, and OpenClaw. Purpose: if any system needs to be rebuilt from scratch, all skills are documented and restorable from this repo.
+
+This index is generated from discovered `SKILL.md` files in the repository.
 
 ## Contents
+
+Total skills indexed: 262
 
 | Folder | System | Skills |
 |---|---|---|
 | `claudeclaw/skills/` | ClaudeClaw | 16 |
-| `hermes/skills/` | Hermes | 176 |
+| `hermes/skills/` | Hermes | 183 |
+| `myclaw/skills/` | MyClaw | 1 |
 | `openclaw/workspace-skills/` | OpenClaw Workspace | 1 |
 | `openclaw/project-skills/` | OpenClaw Project | 1 |
 | `openclaw/sandbox-skills/` | OpenClaw Sandbox | 60 |
 
 ---
-
 ## ClaudeClaw Skills
+
+### (root)
 
 | Skill | Path | Description |
 |---|---|---|
@@ -54,6 +60,7 @@ Backup of all skills built and installed across ClaudeClaw, Hermes, and OpenClaw
 | apple-reminders | `hermes/skills/apple/apple-reminders` | Apple Reminders via remindctl: add, list, complete. |
 | findmy | `hermes/skills/apple/findmy` | Track Apple devices/AirTags via FindMy.app on macOS. |
 | imessage | `hermes/skills/apple/imessage` | Send and receive iMessages/SMS via the imsg CLI on macOS. |
+| macos-computer-use | `hermes/skills/apple/macos-computer-use` | \| Drive the macOS desktop in the background — screenshots, mouse, keyboard, scroll, drag — without stealing the user's cursor, keyboard focus, or Space. Works with any tool-capable model. Load this skill whenever the `computer_use` tool is available. |
 
 ### autonomous-ai-agents
 
@@ -62,6 +69,7 @@ Backup of all skills built and installed across ClaudeClaw, Hermes, and OpenClaw
 | claude-code | `hermes/skills/autonomous-ai-agents/claude-code` | Delegate coding to Claude Code CLI (features, PRs). |
 | codex | `hermes/skills/autonomous-ai-agents/codex` | Delegate coding to OpenAI Codex CLI (features, PRs). |
 | hermes-agent | `hermes/skills/autonomous-ai-agents/hermes-agent` | Configure, extend, or contribute to Hermes Agent. |
+| kanban-codex-lane | `hermes/skills/autonomous-ai-agents/kanban-codex-lane` | Use when a Hermes Kanban worker wants to run Codex CLI as an isolated implementation lane while Hermes keeps ownership of task lifecycle, reconciliation, testing, and handoff. |
 | opencode | `hermes/skills/autonomous-ai-agents/opencode` | Delegate coding to OpenCode CLI (features, PR review). |
 
 ### career
@@ -77,6 +85,7 @@ Backup of all skills built and installed across ClaudeClaw, Hermes, and OpenClaw
 | architecture-diagram | `hermes/skills/creative/architecture-diagram` | Dark-themed SVG architecture/cloud/infra diagrams as HTML. |
 | ascii-art | `hermes/skills/creative/ascii-art` | ASCII art: pyfiglet, cowsay, boxes, image-to-ascii. |
 | ascii-video | `hermes/skills/creative/ascii-video` | ASCII video: convert video/audio to colored ASCII MP4/GIF. |
+| baoyu-article-illustrator | `hermes/skills/creative/baoyu-article-illustrator` | Article illustrations: type × style × palette consistency. |
 | baoyu-comic | `hermes/skills/creative/baoyu-comic` | Knowledge comics (知识漫画): educational, biography, tutorial. |
 | baoyu-infographic | `hermes/skills/creative/baoyu-infographic` | Infographics: 21 layouts x 21 styles (信息图, 可视化). |
 | claude-design | `hermes/skills/creative/claude-design` | Design one-off HTML artifacts (landing, deck, prototype). |
@@ -113,7 +122,7 @@ Backup of all skills built and installed across ClaudeClaw, Hermes, and OpenClaw
 |---|---|---|
 | hermes-gateway-setup | `hermes/skills/devops/hermes-gateway-setup` | Install, configure, and troubleshoot the Hermes messaging gateway for Discord, Telegram, Slack, WhatsApp, and other platforms. Covers bot token validation, systemd service management, and platform allowlisting. |
 | interactive-sudo-via-chat | `hermes/skills/devops/interactive-sudo-via-chat` | Run sudo commands on behalf of the user when only the user knows the password and you're operating from chat (Discord, Telegram, etc.). Forward the password from the user through a PTY to sudo without triggering shell-cache or heredoc pitfalls. |
-| kanban-orchestrator | `hermes/skills/devops/kanban-orchestrator` | Decomposition playbook + specialist-roster conventions + anti-temptation rules for an orchestrator profile routing work through Kanban. The "don't do the work yourself" rule and the basic lifecycle are auto-injected into every kanban worker's system prompt; this skill is the deeper playbook when you're specifically playing the orchestrator role. |
+| kanban-orchestrator | `hermes/skills/devops/kanban-orchestrator` | Decomposition playbook + anti-temptation rules for an orchestrator profile routing work through Kanban. The "don't do the work yourself" rule and the basic lifecycle are auto-injected into every kanban worker's system prompt; this skill is the deeper playbook when you're specifically playing the orchestrator role. |
 | kanban-worker | `hermes/skills/devops/kanban-worker` | Pitfalls, examples, and edge cases for Hermes Kanban workers. The lifecycle itself is auto-injected into every worker's system prompt as KANBAN_GUIDANCE (from agent/prompt_builder.py); this skill is what you load when you want deeper detail on specific scenarios. |
 | webhook-subscriptions | `hermes/skills/devops/webhook-subscriptions` | Webhook subscriptions: event-driven agent runs. |
 
@@ -121,10 +130,11 @@ Backup of all skills built and installed across ClaudeClaw, Hermes, and OpenClaw
 
 | Skill | Path | Description |
 |---|---|---|
-| discord-bot-cost-optimization | `hermes/skills/discord/discord-bot-cost-optimization` | \| |
-| discord-bot-hermes-integration | `hermes/skills/discord/discord-bot-hermes-integration` | \| |
-| discord-bot-model-switching | `hermes/skills/discord/discord-bot-model-switching` | \| |
-| discord-multi-bot-setup | `hermes/skills/discord/discord-multi-bot-setup` | \| |
+| discord-agent-handoff | `hermes/skills/discord/discord-agent-handoff` | Route work between the Hermes Discord agent fleet so bots can assign tasks, process AGENT TASK messages, complete deliverables in their private channels, and confirm completion. |
+| discord-bot-cost-optimization | `hermes/skills/discord/discord-bot-cost-optimization` | \| All Discord bot response behavior is controlled from a single config file: ~/.hermes/discord-bots/bot_config.py This is the ONLY file you need to edit to change how bots respond. Changes apply to ALL bots after a service restart. Works with any AI model/provider — the config is model-agnostic. |
+| discord-bot-hermes-integration | `hermes/skills/discord/discord-bot-hermes-integration` | \| Provides a reusable HermesAgent class that calls the Anthropic API directly with a proper system prompt for reliable character identity. Includes response formatting, message chunking (Discord 2000-char limit), timeout management, and graceful error handling. Works for both single-bot and multi-bot (independent process) architectures. IMPORTANT: Uses direct Anthropic SDK, NOT Hermes CLI subprocess. The CLI approach was abandoned because Hermes injects its own identity (Claude Code persona, memory, SOUL.md, AGENTS.md) which overrides bot character even with --ignore-rules. Direct API with system= parameter is the only reliable way to maintain bot identity. |
+| discord-bot-model-switching | `hermes/skills/discord/discord-bot-model-switching` | \| All 5 Discord bots support runtime model switching via the !model command. Supports Anthropic (Claude) and OpenAI (GPT/Codex) providers. Models are defined in bot_config.py — add new ones there. Each bot maintains its own model state independently. |
+| discord-multi-bot-setup | `hermes/skills/discord/discord-multi-bot-setup` | \| Set up and deploy multiple independent Discord bots using standalone discord.py scripts. Manage bot lifecycle with a launcher process and systemd service for auto-restart and boot persistence. Supports mixed response modes: respond-all (primary bot) + mention-only (auxiliary bots). Supports channel-aware routing: bots auto-respond in their dedicated channel + war-room (+ threads), mention-only elsewhere. |
 | discord-server-management | `hermes/skills/discord/discord-server-management` | Create, edit, and delete Discord channels, categories, and threads using the Discord REST API. Use this skill whenever the user asks to create or manage Discord channels, categories, or server structure. |
 | mission-control-report | `hermes/skills/discord/mission-control-report` | Generate and deliver a daily Mission Control status report to the Discord #setup > mission-control thread. Covers dashboard status, active tasks, agents, skills, cron jobs, sessions, memory, and Obsidian vault activity. All times in 12-hour format (e.g. 2:00 AM). |
 
@@ -193,26 +203,52 @@ Backup of all skills built and installed across ClaudeClaw, Hermes, and OpenClaw
 
 | Skill | Path | Description |
 |---|---|---|
+| local-memory-archive | `hermes/skills/memory/local-memory-archive` | Archive overgrown Hermes durable memory entries to local SSD files instead of keeping them in injected memory. Use when memory is full, memory writes fail due to capacity, old durable facts should be retained for future reference but removed or compacted from active memory, or the user asks to store memory/archive knowledge locally without using persistent memory budget. |
 | obsidian-memory-curator | `hermes/skills/memory/obsidian-memory-curator` | Curate durable memory from sessions into reviewable Obsidian-ready updates by separating long-term facts from temporary noise. |
 
 ### mlops
 
 | Skill | Path | Description |
 |---|---|---|
-| evaluating-llms-harness | `hermes/skills/mlops/evaluation/lm-evaluation-harness` | lm-eval-harness: benchmark LLMs (MMLU, GSM8K, etc.). |
-| weights-and-biases | `hermes/skills/mlops/evaluation/weights-and-biases` | W&B: log ML experiments, sweeps, model registry, dashboards. |
 | gemini | `hermes/skills/mlops/gemini` | Gemini CLI for one-shot Q&A, summaries, and generation. |
 | huggingface-hub | `hermes/skills/mlops/huggingface-hub` | HuggingFace hf CLI: search/download/upload models, datasets. |
+| model-usage | `hermes/skills/mlops/model-usage` | Summarize CodexBar local cost logs by model for Codex or Claude, including current or full breakdowns. |
+| oracle | `hermes/skills/mlops/oracle` | Use oracle CLI to bundle prompts and files for second-model debugging, refactor, design, or review checks. |
+| sag | `hermes/skills/mlops/sag` | ElevenLabs text-to-speech with mac-style say UX. |
+
+### mlops/evaluation
+
+| Skill | Path | Description |
+|---|---|---|
+| evaluating-llms-harness | `hermes/skills/mlops/evaluation/lm-evaluation-harness` | lm-eval-harness: benchmark LLMs (MMLU, GSM8K, etc.). |
+| weights-and-biases | `hermes/skills/mlops/evaluation/weights-and-biases` | W&B: log ML experiments, sweeps, model registry, dashboards. |
+
+### mlops/inference
+
+| Skill | Path | Description |
+|---|---|---|
 | llama-cpp | `hermes/skills/mlops/inference/llama-cpp` | llama.cpp local GGUF inference + HF Hub model discovery. |
 | obliteratus | `hermes/skills/mlops/inference/obliteratus` | OBLITERATUS: abliterate LLM refusals (diff-in-means). |
 | outlines | `hermes/skills/mlops/inference/outlines` | Outlines: structured JSON/regex/Pydantic LLM generation. |
 | serving-llms-vllm | `hermes/skills/mlops/inference/vllm` | vLLM: high-throughput LLM serving, OpenAI API, quantization. |
-| model-usage | `hermes/skills/mlops/model-usage` | Summarize CodexBar local cost logs by model for Codex or Claude, including current or full breakdowns. |
+
+### mlops/models
+
+| Skill | Path | Description |
+|---|---|---|
 | audiocraft-audio-generation | `hermes/skills/mlops/models/audiocraft` | AudioCraft: MusicGen text-to-music, AudioGen text-to-sound. |
 | segment-anything-model | `hermes/skills/mlops/models/segment-anything` | SAM: zero-shot image segmentation via points, boxes, masks. |
-| oracle | `hermes/skills/mlops/oracle` | Use oracle CLI to bundle prompts and files for second-model debugging, refactor, design, or review checks. |
+
+### mlops/research
+
+| Skill | Path | Description |
+|---|---|---|
 | dspy | `hermes/skills/mlops/research/dspy` | DSPy: declarative LM programs, auto-optimize prompts, RAG. |
-| sag | `hermes/skills/mlops/sag` | ElevenLabs text-to-speech with mac-style say UX. |
+
+### mlops/training
+
+| Skill | Path | Description |
+|---|---|---|
 | axolotl | `hermes/skills/mlops/training/axolotl` | Axolotl: YAML LLM fine-tuning (LoRA, DPO, GRPO). |
 | fine-tuning-with-trl | `hermes/skills/mlops/training/trl-fine-tuning` | TRL: SFT, DPO, PPO, GRPO, reward modeling for LLM RLHF. |
 | unsloth | `hermes/skills/mlops/training/unsloth` | Unsloth: 2-5x faster LoRA/QLoRA fine-tuning, less VRAM. |
@@ -241,18 +277,20 @@ Backup of all skills built and installed across ClaudeClaw, Hermes, and OpenClaw
 |---|---|---|
 | airtable | `hermes/skills/productivity/airtable` | Airtable REST API via curl. Records CRUD, filters, upserts. |
 | clawhub | `hermes/skills/productivity/clawhub` | Search, install, update, sync, or publish agent skills with the ClawHub CLI and registry. |
-| google-workspace | `hermes/skills/productivity/google-workspace` | Google OAuth2 client credentials (downloaded from Google Cloud Console) |
+| discord-pdf-workflow | `hermes/skills/productivity/discord-pdf-workflow` | Create, edit, improve, review, extract, revise, and post PDFs from Discord bot tasks. Use for any Discord fleet agent asked to make a PDF, update an existing PDF/SOW/MSA/proposal/report, improve formatting/content, convert markdown/text to PDF, revise from feedback, or avoid accidentally sending canned ideas PDFs. |
+| google-workspace | `hermes/skills/productivity/google-workspace` | Gmail, Calendar, Drive, Docs, Sheets via gws CLI or Python. |
 | job-search-automation | `hermes/skills/productivity/job-search-automation` | Automated job search pipeline — analyze candidate profile, search curated job boards, filter by skills/keywords, and generate tailored recommendations with application strategy. |
 | linear | `hermes/skills/productivity/linear` | Linear: manage issues, projects, teams via GraphQL + curl. |
 | maps | `hermes/skills/productivity/maps` | Geocode, POIs, routes, timezones via OpenStreetMap/OSRM. |
 | nano-pdf | `hermes/skills/productivity/nano-pdf` | Edit PDF text/typos/titles via nano-pdf CLI (NL prompts). |
-| notion | `hermes/skills/productivity/notion` | Notion API via curl: pages, databases, blocks, search. |
+| notion | `hermes/skills/productivity/notion` | Notion API + ntn CLI: pages, databases, markdown, Workers. |
 | ocr-and-documents | `hermes/skills/productivity/ocr-and-documents` | Extract text from PDFs/scans (pymupdf, marker-pdf). |
 | ordercli | `hermes/skills/productivity/ordercli` | Foodora-only CLI for checking past orders and active order status (Deliveroo WIP). |
 | powerpoint | `hermes/skills/productivity/powerpoint` | Create, read, edit .pptx decks, slides, notes, templates. |
 | summarize | `hermes/skills/productivity/summarize` | Summarize or transcribe URLs, YouTube/videos, podcasts, articles, transcripts, PDFs, and local files. |
 | taskflow | `hermes/skills/productivity/taskflow` | Coordinate multi-step detached tasks as one durable TaskFlow job with owner context, state, waits, and child tasks. |
 | taskflow-inbox-triage | `hermes/skills/productivity/taskflow-inbox-triage` | Example TaskFlow pattern for inbox triage, intent routing, waiting on replies, and later summaries. |
+| teams-meeting-pipeline | `hermes/skills/productivity/teams-meeting-pipeline` | Operate the Teams meeting summary pipeline via Hermes CLI — summarize meetings, inspect pipeline status, replay jobs, manage Microsoft Graph subscriptions. |
 | things-mac | `hermes/skills/productivity/things-mac` | Add, update, list, search, or inspect Things 3 todos, inbox, today, projects, areas, and tags on macOS. |
 | trello | `hermes/skills/productivity/trello` | Manage Trello boards, lists, and cards via the Trello REST API. |
 
@@ -360,7 +398,18 @@ Backup of all skills built and installed across ClaudeClaw, Hermes, and OpenClaw
 | session-logs | `hermes/skills/system/session-logs` | Search and analyze your own session logs (older/parent conversations) using jq. |
 
 ---
+## MyClaw Skills
+
+### (root)
+
+| Skill | Path | Description |
+|---|---|---|
+| myclaw-context | `myclaw/skills/myclaw-context` | Core context about the MyClaw harness — layout, operating principles, and what the operator expects when you receive a chat request |
+
+---
 ## OpenClaw Workspace Skills
+
+### (root)
 
 | Skill | Path | Description |
 |---|---|---|
@@ -369,12 +418,16 @@ Backup of all skills built and installed across ClaudeClaw, Hermes, and OpenClaw
 ---
 ## OpenClaw Project Skills
 
+### (root)
+
 | Skill | Path | Description |
 |---|---|---|
 | mission-control | `openclaw/project-skills/mission-control` | Interact with Mission Control — AI agent orchestration dashboard. Use when registering agents, managing tasks, syncing skills, or querying agent/task status via MC APIs. |
 
 ---
 ## OpenClaw Sandbox Skills
+
+### (root)
 
 | Skill | Path | Description |
 |---|---|---|
