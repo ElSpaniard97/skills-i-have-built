@@ -1,21 +1,42 @@
 # skills-i-have-built
 
-Backup of all skills built and installed across ClaudeClaw, Hermes, MyClaw, and OpenClaw. Purpose: if any system needs to be rebuilt from scratch, all skills are documented and restorable from this repo.
+Backup of all skills built and installed across ClaudeClaw, Hermes, MyClaw, and OpenClaw, plus Claude-ready ports in `claude/skills/`. Purpose: if any system needs to be rebuilt from scratch, all skills are documented and restorable from this repo.
 
 This index is generated from discovered `SKILL.md` files in the repository.
 
 ## Contents
 
-Total skills indexed: 262
+Total skills indexed: 274
 
 | Folder | System | Skills |
 |---|---|---|
+| `claude/skills/` | Claude (claude.ai, apps, Claude Code) | 12 |
 | `claudeclaw/skills/` | ClaudeClaw | 16 |
 | `hermes/skills/` | Hermes | 183 |
 | `myclaw/skills/` | MyClaw | 1 |
 | `openclaw/workspace-skills/` | OpenClaw Workspace | 1 |
 | `openclaw/project-skills/` | OpenClaw Project | 1 |
 | `openclaw/sandbox-skills/` | OpenClaw Sandbox | 60 |
+
+---
+## Claude Skills
+
+Portable versions for claude.ai, the Claude apps, and Claude Code. See `claude/README.md`.
+
+| Skill | Path | Description |
+|---|---|---|
+| ai-model-research | `claude/skills/ai-model-research` | Produce a source-backed AI model research briefing (new model releases, benchmarks, papers, pricing and availability changes, community reaction) covering the last N days. Use when the user asks for an AI news roundup, a weekly model briefing, "what's new in AI/LLMs", what changed with a specific model or vendor, or how a new model compares to others. Every claim links to a primary source; vendor claims are labeled as such. |
+| career-artifact-builder | `claude/skills/career-artifact-builder` | Turn real project work (READMEs, commit history, notes, session logs, or a plain description) into recruiter-ready career artifacts: resume bullets, LinkedIn posts, portfolio case studies, and STAR interview stories. Use when the user asks to write or improve resume bullets, describe a project for a job application, draft a LinkedIn post about something they built, prepare behavioral interview answers, or build a portfolio entry. Every claim is grounded in the source evidence; metrics are never invented. |
+| github-pages-portfolio-site | `claude/skills/github-pages-portfolio-site` | Build and publish a recruiter-facing static portfolio or showcase site on GitHub Pages with strict secret hygiene: repo setup, hardened .gitignore, Pages enablement, a build spec, gitleaks and link-check CI, and a post-launch security audit (CSP, SRI, PII, noopener). Use when the user wants a portfolio site, a public page about their homelab, AI agents, bots, or other private systems, or wants an existing GitHub Pages site audited and hardened before sharing it with recruiters. |
+| github-repo-review | `claude/skills/github-repo-review` | Run a standardized, evidence-based quality review of a GitHub repository or local repo (README and docs, license, hygiene, secret exposure, CI and tests, structure, portfolio readiness) and return a scored report with prioritized findings and proposed patches. Use when the user asks to review, audit, or grade a repo, check whether a project is portfolio- or production-ready, find what a repo is missing, or run periodic QA across several repos. Recommends changes only; never pushes. |
+| helpdesk-triage | `claude/skills/helpdesk-triage` | Structured IT support triage across identity, network, device, and application layers: intake, evidence collection, ranked hypotheses, lowest-risk fix first, verification, and an escalation note if unresolved. Use when the user reports something broken for a person or team (can't log in, VPN or Wi-Fi down, Outlook/Teams/M365 issues, printer, slow laptop, app errors, access denied), asks for help desk or ticket triage, root-cause narrowing, or wants an escalation write-up. |
+| job-search-automation | `claude/skills/job-search-automation` | Find and rank job openings that fit the user's actual background: read their resume, GitHub, or LinkedIn summary, search job connectors (Indeed, Dice) and curated boards, filter by skills, level, location and work authorization, and return a prioritized shortlist with why-it-fits notes and an application plan. Use when the user asks to find jobs, wants roles matching their resume, says they are job hunting or looking for work, or asks which openings to apply to first. |
+| linux-system-health | `claude/skills/linux-system-health` | Run read-only Linux host health checks (uptime and load, memory, disk, failed systemd units, recent errors in the journal, network and DNS, pending updates) and produce a Healthy/Warning/Critical operations report with evidence. Use when the user asks to check on a Linux server or this machine, why a box is slow, whether services are failing or the disk is filling up, or for a daily/weekly host health report. Report-first: never restarts services or installs packages. |
+| llm-cost-optimization | `claude/skills/llm-cost-optimization` | Analyze and reduce LLM API or agent spend: measure where cost goes (by model, source, day, session, cache reads), find the dominant drivers, and apply the highest-impact levers (model routing, cheaper models for scheduled jobs, prompt caching and pruning, batch processing) while watching quality. Use when the user's Claude/OpenAI/agent bill is too high, they ask where their tokens or money are going, want a cost report with recommendations, or are designing a new LLM setup and want it cost-aware from day one. |
+| local-file-ops | `claude/skills/local-file-ops` | Safely summarize, audit, and organize local files and folders: folder size summaries, large-file inventories, duplicate detection, stale/temp file reports, and explicit cleanup plans. Use when the user asks what is taking up space, wants to clean up Downloads or a project folder, find duplicates or big files, organize a directory, or check a folder before archiving or deleting it. Report-only by default; nothing is moved, renamed, or deleted without approval of exact paths. |
+| obsidian-memory-curator | `claude/skills/obsidian-memory-curator` | Curate durable memory from recent sessions, notes, or logs into reviewable Obsidian-ready updates, separating long-term facts (preferences, decisions, environment, project conventions) from temporary noise, and proposing Add/Replace/Remove changes for approval. Use when the user asks to clean up or consolidate memory, decide what is worth remembering, prepare MEMORY.md or vault updates, or summarize durable context from a week of work. |
+| security-triage | `claude/skills/security-triage` | Defensive, read-only security triage for a Linux host and local project repos: listening ports, firewall state, failed and brute-force logins, sudo activity, pending security updates, risky permissions, and secrets committed to git. Produces a severity-ranked report with evidence and an approval-gated remediation checklist. Use when the user asks for a security audit or posture check, is worried a server was compromised, sees suspicious logins, wants a firewall or open-port review, or when linux-system-health flags a security warning. Defensive use only. |
+| skill-quality-auditor | `claude/skills/skill-quality-auditor` | Audit a skills catalog (or a single skill) for trigger-ready descriptions, input clarity, safety guardrails, verification steps, output format, maintainability, and overlap between skills, and return a scored report with prioritized, concrete edit recommendations. Use when the user asks to audit or grade their skills, find overlapping, stale, or broken skills, check a new SKILL.md before publishing, or clean up the catalog after adding several skills. Read-only: never edits skill files. |
 
 ---
 ## ClaudeClaw Skills
