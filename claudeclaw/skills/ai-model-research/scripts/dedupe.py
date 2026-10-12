@@ -9,7 +9,9 @@ import sys
 import urllib.parse
 
 
-STATE_PATH = os.path.expanduser("~/.hermes/cron/state/ai-research-seen.json")
+STATE_PATH = os.path.expanduser(
+    os.environ.get("AI_RESEARCH_STATE", "~/.claudeclaw/state/ai-research-seen.json")
+)
 TRACKING_PARAMS = re.compile(r"^(utm_|fbclid$|gclid$|mc_cid$|mc_eid$|_hs)", re.I)
 
 

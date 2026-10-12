@@ -1,7 +1,7 @@
 ---
 name: obsidian-memory-curator
-description: Curate durable memory from sessions into reviewable Obsidian-ready updates by separating long-term facts from temporary noise.
-version: 1.0.0
+description: Curate durable memory from recent sessions, notes, or logs into reviewable Obsidian-ready updates, separating long-term facts (preferences, decisions, environment, project conventions) from temporary noise, and proposing Add/Replace/Remove changes for approval. Use when the user asks to clean up or consolidate memory, decide what is worth remembering, prepare MEMORY.md or vault updates, or summarize durable context from a week of work.
+version: 1.1.0
 allowed-tools: Read Write Bash
 ---
 
@@ -96,4 +96,5 @@ A run passes only if:
 ## Notes
 - Prefer fewer, high-value memory items over large noisy dumps.
 - Keep language compact and factual for long-term retrieval quality.
-- Vault path: `/home/zeke/Hermes-Vault` (confirm with user if unsure).
+- Vault path: `$OBSIDIAN_VAULT_PATH` if set, otherwise `~/Hermes-Vault` (confirm with user if unsure).
+- Before proposing an Add, search the vault (`grep -ril "<key term>" "$VAULT"`) so you propose a Replace instead of a duplicate.

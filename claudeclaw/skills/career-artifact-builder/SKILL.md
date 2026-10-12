@@ -1,7 +1,7 @@
 ---
 name: career-artifact-builder
-description: Convert real project work into recruiter-ready artifacts — resume bullets, LinkedIn posts, portfolio case studies, and STAR stories. Claims are grounded in actual evidence, never fabricated.
-version: 1.0.0
+description: "Turn real project work (READMEs, commit history, notes, session logs, or a plain description) into recruiter-ready career artifacts: resume bullets, LinkedIn posts, portfolio case studies, and STAR interview stories. Use when the user asks to write or improve resume bullets, describe a project for a job application, draft a LinkedIn post about something they built, prepare behavioral interview answers, or build a portfolio entry. Every claim is grounded in the source evidence; metrics are never invented."
+version: 1.1.0
 allowed-tools: Read Bash
 ---
 
@@ -23,6 +23,7 @@ Use this skill when the user asks to write resume bullets, draft a LinkedIn post
 2. **Identify the core achievement**
    - Distill to one sentence: `[Action verb] + [what] + [result or scale]`.
    - Confirm the achievement is defensible in an interview.
+   - Separate what the user personally did from what the team or a tool did; artifacts claim only the user's part.
 3. **Draft requested artifact(s)**
 
    ### Resume Bullet
@@ -114,4 +115,4 @@ A run passes only if:
 
 ## Notes
 - STAR stories work best when the Action section uses first-person singular decisions, not team actions.
-- For LinkedIn, shorter posts (150–250 words) consistently outperform long-form on engagement.
+- For LinkedIn, default to 150–250 words; go longer only when the user asks for a deep-dive post.

@@ -1,7 +1,7 @@
 ---
 name: linux-system-health
-description: Monitor Linux host health and produce an operations report with failed services, disk, memory, network, and update posture. Report-first, no service changes.
-version: 1.0.0
+description: "Run read-only Linux host health checks (uptime and load, memory, disk, failed systemd units, recent errors in the journal, network and DNS, pending updates) and produce a Healthy/Warning/Critical operations report with evidence. Use when the user asks to check on a Linux server or this machine, why a box is slow, whether services are failing or the disk is filling up, or for a daily/weekly host health report. Report-first: never restarts services or installs packages."
+version: 1.1.0
 allowed-tools: Bash Read Write
 ---
 
@@ -21,16 +21,17 @@ Use this skill when the user asks to check Linux host health, diagnose machine s
 2. **Check resource pressure (read-only):**
    - CPU load from `uptime`
    - Memory from `free -h`
-   - Disk from `df -h`
+   - Disk from `df -h -x tmpfs -x devtmpfs -x squashfs` and inodes from `df -i` (flag anything over 85%)
 3. **Check service state (read-only):**
    - `systemctl --failed`
    - Identify critical failures only.
 4. **Check recent system errors (read-only):**
-   - `journalctl -p 3 -xb` (or last 24h equivalent) and summarize top recurring errors.
+   - `journalctl -p 3 --since "24 hours ago" --no-pager | tail -200` (adjust to the requested window) and summarize the top recurring errors by unit.
+   - If the journal is not readable without sudo, say so in `Verification` rather than skipping silently.
 5. **Check network posture (read-only):**
-   - `ip addr`, default route, DNS resolution check, and one basic connectivity check.
+   - `ip -br addr`, `ip route show default`, `getent hosts github.com` (DNS), and one connectivity check such as `curl -sS -o /dev/null -w '%{http_code}' https://github.com`.
 6. **Check update posture (read-only):**
-   - Pending package updates and security update signal where available.
+   - Pending package updates and security update signal where available: `apt list --upgradable 2>/dev/null` (Debian/Ubuntu), `dnf check-update --security` (Fedora/RHEL), and `[ -f /var/run/reboot-required ] && cat /var/run/reboot-required` for a pending reboot.
 7. **Generate report:**
    - Assign status: `Healthy`, `Warning`, or `Critical`.
    - Include evidence snippets and recommended next actions.

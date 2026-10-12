@@ -5,7 +5,7 @@ from pathlib import Path
 
 SEV_ORDER = {"Critical": 0, "High": 1, "Med": 2, "Low": 3}
 SEV_ICON = {"Critical": "🔴", "High": "🟠", "Med": "🟡", "Low": "🟢"}
-OUT = Path(os.environ.get("SECURITY_REPORT_DIR", "/home/zeke/claudeclaw/store/security-reports"))
+OUT = Path(os.environ.get("SECURITY_REPORT_DIR", os.path.join(os.environ.get("CLAUDECLAW_HOME", os.path.expanduser("~/claudeclaw")), "store", "security-reports")))
 
 def load(path):
     try:

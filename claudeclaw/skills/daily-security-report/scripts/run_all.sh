@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -uo pipefail
 SKILL_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-REPORT_DIR="${CLAUDECLAW_SECURITY_REPORT_DIR:-/home/zeke/claudeclaw/store/security-reports}"
+REPORT_DIR="${CLAUDECLAW_SECURITY_REPORT_DIR:-${CLAUDECLAW_HOME:-$HOME/claudeclaw}/store/security-reports}"
 mkdir -p "$REPORT_DIR"
 export SECURITY_REPORT_DIR="$REPORT_DIR"
 bash "$SKILL_DIR/scripts/scan_system.sh" > /tmp/sec_system.json 2>/tmp/sec_system.err || echo '{"findings":[],"error":true}' > /tmp/sec_system.json

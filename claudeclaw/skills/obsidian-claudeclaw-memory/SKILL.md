@@ -1,7 +1,7 @@
 ---
 name: obsidian-claudeclaw-memory
-description: Set up Obsidian + ClaudeClaw as a living AI memory system. Wires the Obsidian vault to ClaudeClaw's context injection, maintains curated MEMORY.md and USER.md in the vault, and schedules overnight memory distillation via ClaudeClaw's built-in scheduler. Covers vault file structure, CLAUDE.md persona sync, MEMORY.md distillation, and heartbeat-based maintenance.
-version: 1.0.0
+description: Set up and maintain Obsidian + ClaudeClaw as a living AI memory system - wire the vault to ClaudeClaw's context injection (OBSIDIAN_VAULT_PATH), create and curate MEMORY.md, USER.md, daily memory/ logs and HEARTBEAT.md, symlink CLAUDE.md as SOUL.md, and schedule overnight memory distillation with the ClaudeClaw scheduler. Use when the user wants to connect Obsidian to ClaudeClaw, set up or repair the vault memory structure, schedule memory maintenance, or asks how ClaudeClaw reads the vault.
+version: 1.1.0
 author: ClaudeClaw
 license: MIT
 allowed-tools: Bash Read Write
@@ -20,13 +20,13 @@ ClaudeClaw doesn't *have* memory — it *reads* memory. At every session start, 
 
 ## Prerequisites
 
-- `OBSIDIAN_VAULT_PATH` set in `/home/zeke/claudeclaw/.env` (e.g. `/home/zeke/Hermes-Vault`)
+- `OBSIDIAN_VAULT_PATH` set in `${CLAUDECLAW_HOME:-$HOME/claudeclaw}/.env` (e.g. `~/Hermes-Vault`)
 - Obsidian desktop app installed and vault opened at that path
 - ClaudeClaw running (confirms vault path is active)
 
 Verify:
 ```bash
-grep OBSIDIAN_VAULT_PATH /home/zeke/claudeclaw/.env
+grep OBSIDIAN_VAULT_PATH ${CLAUDECLAW_HOME:-$HOME/claudeclaw}/.env
 ```
 
 ## File Structure
@@ -50,7 +50,7 @@ Core files the vault should contain:
 ### 1. Confirm vault path
 
 ```bash
-VAULT=$(grep OBSIDIAN_VAULT_PATH /home/zeke/claudeclaw/.env | cut -d= -f2)
+VAULT=$(grep OBSIDIAN_VAULT_PATH ${CLAUDECLAW_HOME:-$HOME/claudeclaw}/.env | cut -d= -f2)
 echo "Vault: $VAULT"
 ```
 
@@ -59,7 +59,7 @@ echo "Vault: $VAULT"
 ClaudeClaw's persona lives in `CLAUDE.md`. Expose it in the vault so Obsidian can visualise it and edits flow back:
 
 ```bash
-ln -sf /home/zeke/claudeclaw/CLAUDE.md "$VAULT/SOUL.md"
+ln -sf ${CLAUDECLAW_HOME:-$HOME/claudeclaw}/CLAUDE.md "$VAULT/SOUL.md"
 ```
 
 ### 3. Create MEMORY.md (if not present)
@@ -185,7 +185,7 @@ Obsidian Graph View
        │
        ▼
 $OBSIDIAN_VAULT_PATH/          ← Obsidian vault root
-├── SOUL.md   ──symlink──►  /home/zeke/claudeclaw/CLAUDE.md
+├── SOUL.md   ──symlink──►  ${CLAUDECLAW_HOME:-$HOME/claudeclaw}/CLAUDE.md
 ├── USER.md                  ← maintained in vault
 ├── MEMORY.md                ← curated long-term memory
 ├── memory/
@@ -214,7 +214,7 @@ $OBSIDIAN_VAULT_PATH/          ← Obsidian vault root
 - Do **not** overwrite existing `MEMORY.md` or `USER.md` without showing the proposed changes and getting approval.
 - Do **not** delete `memory/YYYY-MM-DD.md` log files — they are the source of truth for distillation.
 - Do **not** symlink any file containing secrets (`.env`, auth tokens) into the vault — vault content surfaces in ClaudeClaw's context.
-- Do **not** set `OBSIDIAN_VAULT_PATH` to a path inside `/home/zeke/claudeclaw/` — the vault should be separate from the project root.
+- Do **not** set `OBSIDIAN_VAULT_PATH` to a path inside `${CLAUDECLAW_HOME:-$HOME/claudeclaw}/` — the vault should be separate from the project root.
 
 ## Best Practices
 

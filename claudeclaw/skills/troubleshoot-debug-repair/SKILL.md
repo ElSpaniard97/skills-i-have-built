@@ -1,7 +1,7 @@
 ---
 name: troubleshoot-debug-repair
-description: Troubleshoot, debug, diagnose, and repair broken ClaudeClaw features, services, dashboards, agents, chat flows, cron jobs, reports, APIs, databases, and local integrations. Use when something is failing, regressed, misconfigured, unavailable, throwing errors, returning empty data, or needs root-cause analysis and a verified fix.
-version: 1.0.0
+description: "Troubleshoot, debug, diagnose, and repair broken ClaudeClaw features: dashboard tabs, chat, agents, scheduled tasks and cron jobs, reports, skills, API routes, database rows, bot delivery, startup, ports, and environment config. Use when something in ClaudeClaw is failing, regressed, misconfigured, unavailable, throwing errors, or returning empty data, or the user asks for root-cause analysis and a verified fix. Diagnose first, then the smallest fix, then re-verify the original failure."
+version: 1.1.0
 allowed-tools: Bash Read Write
 ---
 

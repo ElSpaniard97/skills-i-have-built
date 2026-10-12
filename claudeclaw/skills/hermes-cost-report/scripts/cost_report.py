@@ -9,7 +9,7 @@ from pathlib import Path
 def parse_args():
     parser = argparse.ArgumentParser(description="Generate a ClaudeClaw token cost report.")
     parser.add_argument("--since-days", type=int, default=2, help="Days to include; 0 means all-time.")
-    parser.add_argument("--db", default=os.environ.get("CLAUDECLAW_DB", "/home/zeke/claudeclaw/store/claudeclaw.db"))
+    parser.add_argument("--db", default=os.environ.get("CLAUDECLAW_DB", os.path.join(os.environ.get("CLAUDECLAW_HOME", os.path.expanduser("~/claudeclaw")), "store", "claudeclaw.db")))
     return parser.parse_args()
 
 

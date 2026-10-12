@@ -1,7 +1,7 @@
 ---
 name: local-file-ops
-description: Safely summarize, audit, and organize local files and folders. Produces folder summaries, duplicate reports, large-file inventories, and cleanup plans. No move, rename, or delete actions without explicit approval of exact paths.
-version: 1.0.0
+description: "Safely summarize, audit, and organize local files and folders: folder size summaries, large-file inventories, duplicate detection, stale/temp file reports, and explicit cleanup plans. Use when the user asks what is taking up space, wants to clean up Downloads or a project folder, find duplicates or big files, organize a directory, or check a folder before archiving or deleting it. Report-only by default; nothing is moved, renamed, or deleted without approval of exact paths."
+version: 1.1.0
 allowed-tools: Bash Read Write
 ---
 
@@ -29,7 +29,7 @@ Use this skill when the user asks to summarize a folder, find duplicate files, i
    - Commands: `du -sh`, `find`, `ls -lhS`.
 3. **Large file report (read-only)**
    - List all files exceeding the size threshold with full path, size, and last-modified date.
-   - Flag files not accessed in >180 days as archive candidates.
+   - Flag files not modified in >180 days as archive candidates (use modification time; access time is unreliable on `relatime`/`noatime` mounts).
 4. **Duplicate detection (read-only)**
    - `name+size` mode: group files by identical name + size; flag groups with 2+ members.
    - `content-hash` mode: run `md5sum` or `sha256sum` on candidates; requires explicit approval before running on trees >1GB.
@@ -44,7 +44,8 @@ Use this skill when the user asks to summarize a folder, find duplicate files, i
    - Do **not** execute any action — present the plan for approval.
 7. **Await approval before any mutation**
    - If user approves the cleanup plan, execute actions one at a time, confirming each batch.
-   - Log every completed action to `/home/zeke/claudeclaw/outputs/file-ops-YYYY-MM-DD.log`.
+   - Prefer moving to a dated `_to_delete/` or archive folder over permanent deletion, so the user can undo.
+   - Log every completed action to `${CLAUDECLAW_HOME:-$HOME/claudeclaw}/outputs/file-ops-YYYY-MM-DD.log` (or a log file next to the target folder when ClaudeClaw is not present).
 
 ## Guardrails
 - **Default mode is report-only.** No file is moved, renamed, or deleted unless the user explicitly approves a specific cleanup plan.

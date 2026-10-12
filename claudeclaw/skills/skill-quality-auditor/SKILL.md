@@ -1,7 +1,7 @@
 ---
 name: skill-quality-auditor
-description: Audit the ClaudeClaw skills catalog for trigger clarity, input clarity, safety guardrails, verification steps, output format completeness, and inter-skill overlap. Produces a scored report with prioritized change recommendations.
-version: 1.0.0
+description: "Audit a skills catalog (or a single skill) for trigger-ready descriptions, input clarity, safety guardrails, verification steps, output format, maintainability, and overlap between skills, and return a scored report with prioritized, concrete edit recommendations. Use when the user asks to audit or grade their skills, find overlapping, stale, or broken skills, check a new SKILL.md before publishing, or clean up the catalog after adding several skills. Read-only: never edits skill files."
+version: 1.1.0
 allowed-tools: Bash Read
 ---
 
@@ -12,8 +12,8 @@ Use this skill when the user asks to audit the skills catalog, review skill qual
 
 ## Required Inputs
 - Scope: `full` (all installed skills), `skill/<name>` (one skill).
-- Skills root: `/home/zeke/claudeclaw/skills/` (default).
-- Output target: chat reply or file (`/home/zeke/claudeclaw/outputs/skill-audit-YYYY-MM-DD.md`).
+- Skills root: `${CLAUDECLAW_HOME:-$HOME/claudeclaw}/skills/` (default), or any folder of `*/SKILL.md` the user names.
+- Output target: chat reply or file (`${CLAUDECLAW_HOME:-$HOME/claudeclaw}/outputs/skill-audit-YYYY-MM-DD.md`).
 
 ## Scoring Rubric
 
@@ -21,12 +21,12 @@ Each skill is scored out of **100** across six dimensions (max points shown):
 
 | Dimension | Max | What earns full marks |
 |-----------|-----|-----------------------|
-| **Trigger clarity** | 20 | Trigger is specific, unambiguous, and distinguishes this skill from similar ones |
+| **Trigger clarity** | 20 | The frontmatter `description` says both what the skill does and when to use it (the description is what decides whether the skill loads), with concrete user phrasings, and distinguishes it from similar skills |
 | **Input clarity** | 15 | All required inputs are listed; none are implicit or assumed |
 | **Safety / guardrails** | 20 | At least three explicit guardrails; destructive actions require approval; no silent mutations |
 | **Verification** | 20 | Concrete pass/fail criteria; at least one evidence requirement per major step |
 | **Output format** | 15 | Exact output structure defined; consumer (chat/dashboard/cron) is named |
-| **Maintainability** | 10 | Version field present; no hardcoded paths that break profiles; no stale references |
+| **Maintainability** | 10 | Valid frontmatter (`name` matches the folder, lowercase-hyphenated; `description` under 1024 characters); version field present; no hardcoded home-directory paths; every referenced script/reference file exists; SKILL.md under ~500 lines with detail moved to `references/` |
 
 **Score bands:**
 - 90–100: Publish-ready
@@ -36,7 +36,7 @@ Each skill is scored out of **100** across six dimensions (max points shown):
 
 ## Procedure
 1. **Enumerate skills (read-only)**
-   - `find /home/zeke/claudeclaw/skills -name "SKILL.md" | sort` to collect all skill paths.
+   - `find "$SKILLS_ROOT" -name SKILL.md | sort` to collect all skill paths (`SKILLS_ROOT` is the skills root above).
    - Filter by scope if not `full`.
 2. **Parse each skill**
    - Extract: `name`, `description`, `version`, presence of Trigger / Required Inputs / Procedure / Guardrails / Output Format / Verification / Sample Prompt sections.

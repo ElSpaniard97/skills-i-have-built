@@ -64,9 +64,10 @@ if cp.stdout.strip() != "active":
     add("Med", "fail2ban is not active", cp.stdout.strip() or "inactive/unknown", "Enable fail2ban", "sudo systemctl enable --now fail2ban", True, False)
 
 cp = run("last -n 10 2>/dev/null", timeout=20)
-bad = [l for l in cp.stdout.splitlines() if l.strip() and not l.startswith(("zeke ", "reboot", "wtmp", "root "))]
+me = os.environ.get("USER") or home.name
+bad = [l for l in cp.stdout.splitlines() if l.strip() and not l.startswith((me + " ", "reboot", "wtmp", "root "))]
 if bad:
-    add("Low", "Recent login by non-zeke user", "\n".join(bad[:10]), "Review recent logins", "last -n 20", False, False)
+    add("Low", f"Recent login by a user other than {me}", "\n".join(bad[:10]), "Review recent logins", "last -n 20", False, False)
 
 ssh_dir = home / ".ssh"
 if ssh_dir.exists():
