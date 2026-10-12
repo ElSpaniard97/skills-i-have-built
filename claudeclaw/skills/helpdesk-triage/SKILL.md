@@ -1,7 +1,7 @@
 ---
 name: helpdesk-triage
-description: Structured IT support triage workflow across identity, network, device, and application layers with evidence-based diagnosis and safe remediation proposals.
-version: 1.0.0
+description: "Structured IT support triage across identity, network, device, and application layers: intake, evidence collection, ranked hypotheses, lowest-risk fix first, verification, and an escalation note if unresolved. Use when the user reports something broken for a person or team (can't log in, VPN or Wi-Fi down, Outlook/Teams/M365 issues, printer, slow laptop, app errors, access denied), asks for help desk or ticket triage, root-cause narrowing, or wants an escalation write-up."
+version: 1.1.0
 allowed-tools: Bash Read
 ---
 
@@ -19,6 +19,7 @@ Use this skill when the user asks for troubleshooting support, incident triage, 
 ## Procedure
 1. **Intake & classify**
    - Capture issue summary, severity, business impact, and reproducibility.
+   - If key inputs are missing, ask for at most the two or three facts that most change the diagnosis (scope, first-seen time, recent changes) and proceed with stated assumptions for the rest.
 2. **Layered triage**
    - Identity layer: auth/account/license/access checks.
    - Network layer: connectivity, DNS, VPN, latency/path checks.
@@ -26,6 +27,7 @@ Use this skill when the user asks for troubleshooting support, incident triage, 
    - Application layer: app logs/config/version/service dependencies.
 3. **Evidence collection**
    - Collect command outputs, error codes, timestamps, and affected components.
+   - When you cannot run commands on the affected machine, give the user the exact command for their OS (for example `ipconfig /all`, `nslookup`, `Test-NetConnection host -Port 443`, `dsregcmd /status` on Windows; `ip a`, `resolvectl status`, `curl -v` on Linux) and ask them to paste the output.
 4. **Hypothesis ranking**
    - List likely causes from most to least probable with supporting evidence.
 5. **Safe remediation proposal**

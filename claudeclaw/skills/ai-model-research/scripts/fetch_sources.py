@@ -15,7 +15,7 @@ import xml.etree.ElementTree as ET
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SOURCES_PATH = ROOT + "/references/sources.yaml"
-UA = "Hermes ai-model-research/1.0 (+https://github.com/)"
+UA = "ClaudeClaw ai-model-research/1.0 (+https://github.com/)"
 
 
 def log(message):
@@ -242,7 +242,7 @@ def fetch_hn(entries, cutoff):
 
 def fetch_reddit(entries, cutoff):
     output = []
-    headers = {"User-Agent": "Hermes ai-model-research/1.0"}
+    headers = {"User-Agent": "ClaudeClaw ai-model-research/1.0"}
     for entry in entries:
         name = entry.get("name", entry.get("url", "Reddit"))
         url = entry.get("url", "")

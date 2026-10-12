@@ -1,7 +1,7 @@
 ---
 name: security-triage
-description: Defensive security triage for the Linux host and project repos. Inspects logs, open ports, firewall state, failed logins, and package posture. Produces a severity-ranked report with evidence and remediation checklists. Defensive use only — no offensive guidance.
-version: 1.0.0
+description: "Defensive, read-only security triage for a Linux host and local project repos: listening ports, firewall state, failed and brute-force logins, sudo activity, pending security updates, risky permissions, and secrets committed to git. Produces a severity-ranked report with evidence and an approval-gated remediation checklist. Use when the user asks for a security audit or posture check, is worried a server was compromised, sees suspicious logins, wants a firewall or open-port review, or when linux-system-health flags a security warning. Defensive use only."
+version: 1.1.0
 allowed-tools: Bash Read Write
 ---
 
@@ -13,7 +13,7 @@ Use this skill when the user asks for a security posture check, security audit, 
 ## Required Inputs
 - Scope: `host` (Linux system), `repos` (GitHub/local), or `full` (both).
 - Time window for log analysis: default last 7 days.
-- Output target: chat reply or local file (`/home/zeke/claudeclaw/outputs/security-YYYY-MM-DD.md`).
+- Output target: chat reply or local file (`${CLAUDECLAW_HOME:-$HOME/claudeclaw}/outputs/security-YYYY-MM-DD.md`).
 
 ## Procedure
 1. **Establish baseline (read-only)**
@@ -25,12 +25,12 @@ Use this skill when the user asks for a security posture check, security audit, 
    - `ufw status verbose` or `iptables -L -n` — confirm rules are active.
    - Flag any overly permissive rules (e.g. `0.0.0.0/0` allow on sensitive ports).
 4. **Check failed login attempts (read-only)**
-   - `journalctl -u ssh --since "7 days ago" | grep -i "failed\|invalid\|refused"`.
+   - `journalctl -u ssh -u sshd --since "7 days ago" --no-pager | grep -iE "failed|invalid|refused"` (the unit is `ssh` on Debian/Ubuntu and `sshd` on most other distros).
    - Count unique source IPs, identify brute-force patterns.
-   - `lastb | head -20` for tty/console failures if available.
+   - `sudo lastb | head -20` for tty/console failures if available (needs root; if you cannot run it, list it as a blind spot).
 5. **Check sudo and privilege escalation (read-only)**
    - `journalctl | grep -i sudo` for unusual escalation events.
-   - Review `/var/log/auth.log` for anomalies.
+   - Review `/var/log/auth.log` (Debian/Ubuntu) or `/var/log/secure` (RHEL/Fedora) for anomalies; these usually need sudo to read.
 6. **Check package and update posture (read-only)**
    - `apt list --upgradable 2>/dev/null | grep -i security` (or distro equivalent).
    - Flag unpatched security advisories.

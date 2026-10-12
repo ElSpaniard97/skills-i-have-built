@@ -7,7 +7,7 @@ $OBSIDIAN_VAULT_PATH/          (e.g. ~/Hermes-Vault)
 │
 │  ── CORE IDENTITY FILES ──────────────────────────────────────────
 │
-├── SOUL.md        ──symlink──► /home/zeke/claudeclaw/CLAUDE.md
+├── SOUL.md        ──symlink──► ~/claudeclaw/CLAUDE.md
 │                               ClaudeClaw's persona, operating rules, and agent roster
 │                               Edits in Obsidian update CLAUDE.md live
 │
@@ -32,7 +32,7 @@ $OBSIDIAN_VAULT_PATH/          (e.g. ~/Hermes-Vault)
 │  ── AUTOMATIC MEMORY (claudeclaw.db) ──────────────────────────────
 │
 │   NOTE: ClaudeClaw also maintains a parallel SQLite memory system
-│   at /home/zeke/claudeclaw/store/claudeclaw.db. Every conversation
+│   at ~/claudeclaw/store/claudeclaw.db. Every conversation
 │   turn is automatically extracted by Gemini, embedded, and stored.
 │   This complements the vault — vault provides human-readable,
 │   long-term curated context; the DB provides fast semantic recall.
@@ -105,7 +105,7 @@ $OBSIDIAN_VAULT_PATH/          (e.g. ~/Hermes-Vault)
 - **Written:** When you update ClaudeClaw's persona or operating rules
 - **Read:** Surfaces in ClaudeClaw context whenever "soul", "persona", or "rules" match
 - **Content:** ClaudeClaw's identity, tone, capabilities, specialist agents
-- **Keep:** In sync with `/home/zeke/claudeclaw/CLAUDE.md` (they are the same file via symlink)
+- **Keep:** In sync with `~/claudeclaw/CLAUDE.md` (they are the same file via symlink)
 
 ### directives/ (SOPs)
 - **Written:** When a workflow is established and should be repeatable
@@ -120,7 +120,7 @@ $OBSIDIAN_VAULT_PATH/          (e.g. ~/Hermes-Vault)
 | Aspect | Hermes Agent | ClaudeClaw |
 |--------|-------------|-----------|
 | Automatic memory | `state.db` sessions | `claudeclaw.db` with Gemini extraction + embeddings |
-| Persona file | `~/.hermes/SOUL.md` | `/home/zeke/claudeclaw/CLAUDE.md` |
+| Persona file | `~/.hermes/SOUL.md` | `~/claudeclaw/CLAUDE.md` |
 | Memory config | `memory_enabled: true` in `config.yaml` | Always on — `memory-ingest.ts` runs automatically |
 | Scheduled tasks | `hermes cron add` | Ask ClaudeClaw to schedule; uses `scheduler.ts` + SQLite |
 | Session search | `session_search` toolset | Cosine-similarity search over `claudeclaw.db` embeddings |

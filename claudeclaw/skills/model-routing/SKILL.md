@@ -1,7 +1,7 @@
 ---
 name: model-routing
-description: Select the right model (Opus, Sonnet, Haiku, or a specialist agent) before executing complex tasks. Produces a consistent routing decision with rationale before work begins.
-version: 1.0.0
+description: Choose the right Claude model tier (Opus, Sonnet, Haiku), a dual-model review pass, or a specialist ClaudeClaw agent before starting complex, multi-step, or high-risk work, and state the routing decision with rationale before executing. Use when the user asks which model should handle something, before large refactors, auth/infra/secrets changes, research synthesis, or long writing tasks, or when a task spans several domains. Skip for simple single-step requests.
+version: 1.1.0
 allowed-tools: Bash Read
 ---
 
@@ -82,6 +82,7 @@ Use this skill before starting any complex, multi-step, or high-risk task where 
 
 ## Proceed?
 Confirm to continue with this routing, or override below.
+(For Low-risk tasks, state the decision and proceed without waiting.)
 ```
 
 ## Verification
@@ -96,4 +97,5 @@ A run passes only if:
 
 ## Notes
 - For simple single-step tasks, routing overhead is not worth it — use this skill for complex, multi-step, or high-stakes work only.
+- The matrix names tiers, not versions: always use the newest available model in a tier unless the user pins one.
 - As model capabilities evolve, update this matrix when a newer model demonstrably outperforms the current routing assumption.

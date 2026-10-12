@@ -1,7 +1,7 @@
 ---
 name: github-repo-review
-description: Perform a standardized repository quality review for GitHub projects (README, docs, CI, hygiene, structure, and risk) with patch/PR recommendations only.
-version: 1.0.0
+description: Run a standardized, evidence-based quality review of a GitHub repository or local repo (README and docs, license, hygiene, secret exposure, CI and tests, structure, portfolio readiness) and return a scored report with prioritized findings and proposed patches. Use when the user asks to review, audit, or grade a repo, check whether a project is portfolio- or production-ready, find what a repo is missing, or run periodic QA across several repos. Recommends changes only; never pushes.
+version: 1.1.0
 allowed-tools: Bash Read
 ---
 
@@ -18,12 +18,13 @@ Use this skill when the user asks to review a GitHub repository, audit repo qual
 ## Procedure
 1. **Baseline repo metadata**
    - Default branch, last commit activity, open issues/PR counts (if available).
+   - Useful commands: `gh repo view OWNER/REPO --json defaultBranchRef,pushedAt,licenseInfo,description`, `gh pr list --state open`, `gh issue list --state open`, or for a local clone `git log -1 --format=%cd` and `git ls-files | head -200`.
 2. **Documentation quality**
    - Check README completeness (purpose, setup, usage, architecture, troubleshooting).
    - Verify LICENSE presence and contribution guidance.
 3. **Project hygiene**
    - Check `.gitignore`, `.editorconfig` (if relevant), dependency lockfiles, and env template usage.
-   - Scan for obvious secret exposure patterns and unsafe hardcoded credentials.
+   - Scan for obvious secret exposure patterns and unsafe hardcoded credentials (use `gitleaks detect --no-banner` or `trufflehog git file://.` if installed; otherwise `git grep -nIE '(api[_-]?key|secret|token|password)\s*[:=]'` and review hits by hand).
 4. **Build/test/CI posture**
    - Detect test framework and whether tests are runnable/documented.
    - Validate CI workflows exist and align to project language/runtime.
@@ -35,6 +36,10 @@ Use this skill when the user asks to review a GitHub repository, audit repo qual
 7. **Recommendations**
    - Provide prioritized findings: Critical, High, Medium, Low.
    - Propose patches/PRs/issues instead of silent rewrites.
+
+## Scoring
+Score each area, then sum to /100: Documentation 25, Hygiene & Security 25, CI/Test 20, Structure & Maintainability 15, Links & Portfolio Readiness 15. Any confirmed exposed secret caps the overall score at 49 and readiness at "Needs Work".
+Readiness: 85+ Production, 70–84 Portfolio-Ready, below 70 Needs Work.
 
 ## Guardrails
 - Do **not** push commits automatically.

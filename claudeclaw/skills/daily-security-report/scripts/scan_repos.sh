@@ -29,7 +29,7 @@ def discover():
     hermes = Path.home() / "hermes"
     if (hermes / ".git").exists():
         found.append(hermes)
-    cp = run("find /home/zeke -maxdepth 5 -type d -name .git 2>/dev/null", timeout=120)
+    cp = run(f"find {Path.home()} -maxdepth 5 -type d -name .git 2>/dev/null", timeout=120)
     for line in cp.stdout.splitlines():
         p = Path(line).parent
         try:
